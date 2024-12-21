@@ -1,0 +1,175 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API da Concessionária",
+    "description": "API para gerenciar usuários e veículos em uma concessionária.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/usuarios/cadastrar": {
+      "post": {
+        "summary": "Cadastrar um novo usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do usuário para cadastro",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Usuario"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso"
+          },
+          "400": {
+            "description": "Erro de validação"
+          }
+        }
+      }
+    },
+    "/usuarios/login": {
+      "post": {
+        "summary": "Login de um usuário",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Credenciais para login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login bem-sucedido",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "401": {
+            "description": "Credenciais inválidas"
+          }
+        }
+      }
+    },
+    "/veiculos/cadastrar": {
+      "post": {
+        "summary": "Cadastrar um novo veículo",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do veículo para cadastro",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Veiculo"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Veículo cadastrado com sucesso"
+          },
+          "400": {
+            "description": "Erro de validação"
+          }
+        }
+      }
+    },
+    "/veiculos/listar": {
+      "get": {
+        "summary": "Listar veículos",
+        "parameters": [
+          {
+            "name": "limite",
+            "in": "query",
+            "description": "Número de veículos a serem retornados",
+            "required": false,
+            "type": "integer",
+            "enum": [5, 10, 30]
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "description": "Número da página a ser retornada",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de veículos",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Veiculo"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Usuario": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string"
+        },
+        "usuario": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        }
+      },
+      "required": ["nome", "usuario", "senha"]
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "usuario": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        }
+      },
+      "required": ["usuario", "senha"]
+    },
+    "Token": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "Veiculo": {
+      "type": "object",
+      "properties": {
+        "modelo": {
+          "type": "string"
+        },
+        "marca": {
+          "type": "string"
+        },
+        "ano": {
+          "type": "integer"
+        }
+      },
+      "required": ["modelo", "marca", "ano"]
+    }
+  }
+}

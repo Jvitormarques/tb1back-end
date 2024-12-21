@@ -1,0 +1,9 @@
+node_modules/
+# Ignorar o arquivo .env, pois contém dados sensíveis
+.env
+
+# Ignorar banco de dados local
+db/*.json
+
+
+
